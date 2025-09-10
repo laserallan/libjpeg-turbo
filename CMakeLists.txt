@@ -46,8 +46,8 @@ endif()
 # being integrated into another build system using add_subdirectory(), because
 # doing so would require that we (minimally):
 #
-# 1. avoid using certain CMake variables, such as CMAKE_SOURCE_DIR,
-#    CMAKE_BINARY_DIR, and CMAKE_PROJECT_NAME;
+# 1. avoid using certain CMake variables, such as PROJECT_SOURCE_DIR,
+#    PROJECT_BINARY_DIR, and CMAKE_PROJECT_NAME;
 # 2. avoid using implicit include directories and relative paths;
 # 3. optionally provide a way to skip the installation of libjpeg-turbo
 #    components when the 'install' target is built;
@@ -66,7 +66,7 @@ endif()
 # ExternalProject_Add() or make downstream modifications to the libjpeg-turbo
 # build system to suit their specific needs.  Please do not file bug reports,
 # feature requests, or pull requests regarding this.
-# if(NOT CMAKE_SOURCE_DIR STREQUAL CMAKE_CURRENT_SOURCE_DIR)
+# if(NOT PROJECT_SOURCE_DIR STREQUAL CMAKE_CURRENT_SOURCE_DIR)
 #   message(FATAL_ERROR "The libjpeg-turbo build system cannot be integrated into another build system using add_subdirectory().  Use ExternalProject_Add() instead.")
 # endif()
 
@@ -631,7 +631,7 @@ endif()
 message(STATUS "CMAKE_EXECUTABLE_SUFFIX = ${CMAKE_EXECUTABLE_SUFFIX}")
 
 add_custom_target(wrappers COMMAND ${CMAKE_COMMAND}
- -DSOURCE_DIR=${CMAKE_SOURCE_DIR}/src/wrapper
+ -DSOURCE_DIR=${PROJECT_SOURCE_DIR}/src/wrapper
  -P ${CMAKE_CURRENT_SOURCE_DIR}/cmakescripts/GenerateWrappers.cmake)
 
 set(JPEG_SOURCES src/jcapimin.c
@@ -738,10 +738,10 @@ if(WITH_TURBOJPEG)
       set(TJMAPFILE ${CMAKE_CURRENT_SOURCE_DIR}/src/turbojpeg-mapfile.jni)
     endif()
     if(MSVC_LIKE)
-      configure_file(${CMAKE_SOURCE_DIR}/win/turbojpeg.rc.in
-        ${CMAKE_BINARY_DIR}/win/turbojpeg.rc)
+      configure_file(${PROJECT_SOURCE_DIR}/win/turbojpeg.rc.in
+        ${PROJECT_BINARY_DIR}/win/turbojpeg.rc)
       set(TURBOJPEG_SOURCES ${TURBOJPEG_SOURCES}
-        ${CMAKE_BINARY_DIR}/win/turbojpeg.rc)
+        ${PROJECT_BINARY_DIR}/win/turbojpeg.rc)
     endif()
     add_library(turbojpeg SHARED ${TURBOJPEG_SOURCES})
     set_property(TARGET turbojpeg PROPERTY COMPILE_FLAGS
@@ -790,7 +790,7 @@ if(WITH_TURBOJPEG)
     endif()
 
     add_custom_target(tjdoc COMMAND doxygen -s ../doc/doxygen.config
-      WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/src)
+      WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}/src)
   endif()
 
   if(ENABLE_STATIC)
@@ -1942,45 +1942,45 @@ if(WITH_TURBOJPEG)
     set(BASH bash)
   endif()
   add_custom_target(tjtest COMMAND ${CMAKE_COMMAND} -DWITH_JAVA=${WITH_JAVA}
-    -DPRECISION=8 -P ${CMAKE_SOURCE_DIR}/cmakescripts/tjbenchtest.cmake
-    DEPENDS ${CMAKE_SOURCE_DIR}/cmakescripts/tjbenchtest.cmake
+    -DPRECISION=8 -P ${PROJECT_SOURCE_DIR}/cmakescripts/tjbenchtest.cmake
+    DEPENDS ${PROJECT_SOURCE_DIR}/cmakescripts/tjbenchtest.cmake
       ${CMAKE_CURRENT_BINARY_DIR}/test/tjbenchtest)
   add_custom_target(tjtest12 COMMAND ${CMAKE_COMMAND} -DWITH_JAVA=${WITH_JAVA}
-    -DPRECISION=12 -P ${CMAKE_SOURCE_DIR}/cmakescripts/tjbenchtest.cmake
-    DEPENDS ${CMAKE_SOURCE_DIR}/cmakescripts/tjbenchtest.cmake
+    -DPRECISION=12 -P ${PROJECT_SOURCE_DIR}/cmakescripts/tjbenchtest.cmake
+    DEPENDS ${PROJECT_SOURCE_DIR}/cmakescripts/tjbenchtest.cmake
       ${CMAKE_CURRENT_BINARY_DIR}/test/tjbenchtest)
   add_custom_target(tjtest16 COMMAND ${CMAKE_COMMAND} -DWITH_JAVA=${WITH_JAVA}
-    -DPRECISION=2 -P ${CMAKE_SOURCE_DIR}/cmakescripts/tjbenchtest.cmake
+    -DPRECISION=2 -P ${PROJECT_SOURCE_DIR}/cmakescripts/tjbenchtest.cmake
     COMMAND ${CMAKE_COMMAND} -DWITH_JAVA=${WITH_JAVA}
-    -DPRECISION=3 -P ${CMAKE_SOURCE_DIR}/cmakescripts/tjbenchtest.cmake
+    -DPRECISION=3 -P ${PROJECT_SOURCE_DIR}/cmakescripts/tjbenchtest.cmake
     COMMAND ${CMAKE_COMMAND} -DWITH_JAVA=${WITH_JAVA}
-    -DPRECISION=4 -P ${CMAKE_SOURCE_DIR}/cmakescripts/tjbenchtest.cmake
+    -DPRECISION=4 -P ${PROJECT_SOURCE_DIR}/cmakescripts/tjbenchtest.cmake
     COMMAND ${CMAKE_COMMAND} -DWITH_JAVA=${WITH_JAVA}
-    -DPRECISION=5 -P ${CMAKE_SOURCE_DIR}/cmakescripts/tjbenchtest.cmake
+    -DPRECISION=5 -P ${PROJECT_SOURCE_DIR}/cmakescripts/tjbenchtest.cmake
     COMMAND ${CMAKE_COMMAND} -DWITH_JAVA=${WITH_JAVA}
-    -DPRECISION=6 -P ${CMAKE_SOURCE_DIR}/cmakescripts/tjbenchtest.cmake
+    -DPRECISION=6 -P ${PROJECT_SOURCE_DIR}/cmakescripts/tjbenchtest.cmake
     COMMAND ${CMAKE_COMMAND} -DWITH_JAVA=${WITH_JAVA}
-    -DPRECISION=7 -P ${CMAKE_SOURCE_DIR}/cmakescripts/tjbenchtest.cmake
+    -DPRECISION=7 -P ${PROJECT_SOURCE_DIR}/cmakescripts/tjbenchtest.cmake
     COMMAND ${CMAKE_COMMAND} -DWITH_JAVA=${WITH_JAVA}
-    -DPRECISION=9 -P ${CMAKE_SOURCE_DIR}/cmakescripts/tjbenchtest.cmake
+    -DPRECISION=9 -P ${PROJECT_SOURCE_DIR}/cmakescripts/tjbenchtest.cmake
     COMMAND ${CMAKE_COMMAND} -DWITH_JAVA=${WITH_JAVA}
-    -DPRECISION=10 -P ${CMAKE_SOURCE_DIR}/cmakescripts/tjbenchtest.cmake
+    -DPRECISION=10 -P ${PROJECT_SOURCE_DIR}/cmakescripts/tjbenchtest.cmake
     COMMAND ${CMAKE_COMMAND} -DWITH_JAVA=${WITH_JAVA}
-    -DPRECISION=11 -P ${CMAKE_SOURCE_DIR}/cmakescripts/tjbenchtest.cmake
+    -DPRECISION=11 -P ${PROJECT_SOURCE_DIR}/cmakescripts/tjbenchtest.cmake
     COMMAND ${CMAKE_COMMAND} -DWITH_JAVA=${WITH_JAVA}
-    -DPRECISION=13 -P ${CMAKE_SOURCE_DIR}/cmakescripts/tjbenchtest.cmake
+    -DPRECISION=13 -P ${PROJECT_SOURCE_DIR}/cmakescripts/tjbenchtest.cmake
     COMMAND ${CMAKE_COMMAND} -DWITH_JAVA=${WITH_JAVA}
-    -DPRECISION=14 -P ${CMAKE_SOURCE_DIR}/cmakescripts/tjbenchtest.cmake
+    -DPRECISION=14 -P ${PROJECT_SOURCE_DIR}/cmakescripts/tjbenchtest.cmake
     COMMAND ${CMAKE_COMMAND} -DWITH_JAVA=${WITH_JAVA}
-    -DPRECISION=15 -P ${CMAKE_SOURCE_DIR}/cmakescripts/tjbenchtest.cmake
+    -DPRECISION=15 -P ${PROJECT_SOURCE_DIR}/cmakescripts/tjbenchtest.cmake
     COMMAND ${CMAKE_COMMAND} -DWITH_JAVA=${WITH_JAVA}
-    -DPRECISION=16 -P ${CMAKE_SOURCE_DIR}/cmakescripts/tjbenchtest.cmake
-    DEPENDS ${CMAKE_SOURCE_DIR}/cmakescripts/tjbenchtest.cmake
+    -DPRECISION=16 -P ${PROJECT_SOURCE_DIR}/cmakescripts/tjbenchtest.cmake
+    DEPENDS ${PROJECT_SOURCE_DIR}/cmakescripts/tjbenchtest.cmake
       ${CMAKE_CURRENT_BINARY_DIR}/test/tjbenchtest)
   add_custom_target(tjexampletest COMMAND ${CMAKE_COMMAND}
     -DWITH_JAVA=${WITH_JAVA}
-    -P ${CMAKE_SOURCE_DIR}/cmakescripts/tjexampletest.cmake
-    DEPENDS ${CMAKE_SOURCE_DIR}/cmakescripts/tjexampletest.cmake
+    -P ${PROJECT_SOURCE_DIR}/cmakescripts/tjexampletest.cmake
+    DEPENDS ${PROJECT_SOURCE_DIR}/cmakescripts/tjexampletest.cmake
       ${CMAKE_CURRENT_BINARY_DIR}/test/tjcomptest
       ${CMAKE_CURRENT_BINARY_DIR}/test/tjdecomptest
       ${CMAKE_CURRENT_BINARY_DIR}/test/tjtrantest)

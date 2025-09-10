@@ -20,9 +20,9 @@ runme()
 	"$@"
 }
 
-IMGDIR=@CMAKE_SOURCE_DIR@/testimages
+IMGDIR=@PROJECT_SOURCE_DIR@/testimages
 OUTDIR=`mktemp -d /tmp/__tjcomptest_output.XXXXXX`
-EXEDIR=@CMAKE_BINARY_DIR@
+EXEDIR=@PROJECT_BINARY_DIR@
 JAVA="@Java_JAVA_EXECUTABLE@"
 JAVAARGS="-cp $EXEDIR/java/turbojpeg.jar -Djava.library.path=$EXEDIR"
 TJCOMP=$EXEDIR/tjcomp
